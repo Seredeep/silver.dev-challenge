@@ -1,24 +1,127 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { LRUCache } from './LRU';
+import TreeVisualizer from './LCA/TreeVisualizer';
+
+const cache = new LRUCache(3); // Create a cache with a capacity of 3
 
 function App() {
+  const [activeTab, setActiveTab] = useState('tab1');
+  const [key, setKey] = useState('');
+  const [value, setValue] = useState('');
+  const [cacheContents, setCacheContents] = useState<string[]>([]);
+  const [treeData, setTreeData] = useState('');
+  const [p, setP] = useState('');
+  const [q, setQ] = useState('');
+
+  const handleGet = () => {
+    const val = cache.get(Number(key));
+    alert(`Value for key ${key}: ${val}`);
+  };
+
+  const handlePut = () => {
+    cache.put(Number(key), Number(value));
+    updateCacheContents();
+  };
+
+  const updateCacheContents = () => {
+    const contents: string[] = [];
+    cache.cache.forEach((node) => {
+      contents.push(`Key: ${String(node.key)}, Value: ${node.value}`);
+    });
+    setCacheContents(contents);
+  };
+
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
+  };
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      <div className="tabs">
+        <button
+          className={activeTab === 'tab1' ? 'active' : ''}
+          onClick={() => handleTabClick('tab1')}
         >
-          Learn React
-        </a>
-      </header>
+          LRUCache Prototype
+        </button>
+        <button
+          className={activeTab === 'tab2' ? 'active' : ''}
+          onClick={() => handleTabClick('tab2')}
+        >
+          Another Prototype
+        </button>
+        {/* Add more tabs as needed */}
+      </div>
+
+      <div className="tab-content">
+        {activeTab === 'tab1' && ( // LRU Cache Prototype
+          <div>
+            <div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Key"
+                  value={key}
+                  onChange={(e) => setKey(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Value"
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                />
+                <button onClick={handlePut}>Put</button>
+                <button onClick={handleGet}>Get</button>
+              </div>
+              <div>
+                <h2>Cache Contents:</h2>
+                {cacheContents.map((content, index) => (
+                  <div key={index}>{content}</div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+        {activeTab === 'tab2' && (
+        <div>
+          <div>
+            <label>
+              Tree Data:
+              <input
+                type="text"
+                value={treeData}
+                onChange={(e) => setTreeData(e.target.value)}
+                placeholder="Enter tree data (e.g., [1,2,3,null,null,4,5])"
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Node P Value:
+              <input
+                type="number" // Change to text to allow any character
+                value={p}
+                onChange={(e)=>setP(e.target.value)}
+                placeholder="Enter P value"
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Node Q Value:
+              <input
+                type="number" // Change to text to allow any character
+                value={q}
+                onChange={(e)=>setQ(e.target.value)}
+                placeholder="Enter Q value"
+              />
+            </label>
+          </div>
+          <TreeVisualizer tree={treeData} p={p} q={q} />
+        </div>
+      )}
+        {/* Add more tab contents as needed */}
+      </div>
     </div>
   );
 }
