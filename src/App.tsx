@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { LRUCache } from './LRU';
 import TreeVisualizer from './LCA/TreeVisualizer';
+import FlattenView from './Flatten';
+import './App.css';
 
 const cache = new LRUCache(3); // Create a cache with a capacity of 3
 
@@ -34,7 +36,7 @@ function App() {
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
   };
-  
+
   return (
     <div>
       <div className="tabs">
@@ -48,9 +50,14 @@ function App() {
           className={activeTab === 'tab2' ? 'active' : ''}
           onClick={() => handleTabClick('tab2')}
         >
-          Another Prototype
+          LCA Binary Tree
         </button>
-        {/* Add more tabs as needed */}
+        <button
+          className={activeTab === 'tab3' ? 'active' : ''}
+          onClick={() => handleTabClick('tab3')}
+        >
+          Flatten array + object
+        </button>
       </div>
 
       <div className="tab-content">
@@ -120,7 +127,11 @@ function App() {
           <TreeVisualizer tree={treeData} p={p} q={q} />
         </div>
       )}
-        {/* Add more tab contents as needed */}
+        {activeTab === 'tab3' && (
+          <div>
+            <FlattenView />
+          </div>
+        )}
       </div>
     </div>
   );
