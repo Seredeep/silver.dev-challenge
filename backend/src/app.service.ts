@@ -1,14 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
   NamedArgument,
   PositionalArgument,
   ValidationResult,
-  parse,
   validationRules,
-} from './argument-parser';
+} from './argument-parser/constants';
+import { ArgumentParserService } from './argument-parser/argument-parser.service';
 
 @Injectable()
 export class AppService {
+  constructor(
+    @Inject('ArgumentParserService')
+    private argParse: ArgumentParserService,
+  ) {}
+
+  /**
+   * Method to test the find parent function
+   */
+  findParent(child: string, parent: string): string {
+    throw new Error('Method not implemented.');
+  }
+
   /**
    * Method to test the argument parser
    */
@@ -33,7 +45,7 @@ export class AppService {
       },
     ];
 
-    const parsedParams = parse(params, {
+    const parsedParams = this.argParse.parse(params, {
       positionalArguments,
       namedArguments,
     });
