@@ -1,0 +1,163 @@
+// Type: Pseudocode
+/**
+ * Authentication and message encryption is handled by a middleware/interceptor
+ * User is identified by auth token
+ * 
+ */
+//@Controller('whatsapp')
+export class WhatsappController {
+
+    //@Post('message')
+    send(chatId: string, message: string, forward:boolean, replyToId?: string) {
+        // look up chatId in database linked to sending user
+        // add message to chat, replyToId if exists
+
+        // returns message id
+    }
+
+    //@Get('sync')
+    receive() {
+        // look up user's chats in DB
+        // chats hold the unsent messages to the user
+        // returns unsynched messages and chats (new messages, new chats)
+    }
+
+    //@Get('message/status')
+    messageStatus(chatId:string ,messageId: string) {
+        // look up message in DB
+        // returns message status (sent, delivered, read)
+    }
+
+
+    //@Get('user')
+    getUser(phoneNumber?: string, userId?: string) {
+        // look up user by phone number or userId in DB
+        // returns user info if exists. Including online status, last seen, etc
+    }
+
+    //@Post('chat')
+    createChat(userId: string, firstMessage:string) {
+        // look up second user in DB
+        // creates a new conversation with the second user. Sending the first message
+        // returns chatId
+    }
+
+    //@Delete('chat/:chatId')
+    deleteChat() {
+        // look up chat in DB
+        // deletes chat for user (the second party will still have the chat)
+    }
+
+    //@Post('user/:userId/block')
+    blockUser() {
+        // look up user in DB
+        // blocks the second user from sending/receiving messages
+    }
+
+    //@Post('user/:userId/unblock')
+    unblockUser() {
+        // look up user in DB
+        // unblocks the second user from sending/receiving messages
+    }
+
+    //@Post('user/:userId/report')
+    reportUser(reason: string) {
+        // look up user in DB
+        // reports the user for inappropriate behavior
+    }
+
+    //@Post('chat/group')
+    createGroup(name: string, members: string[]) {
+        // look up members in DB
+        // creates a new group chat with the members
+        // returns chatId
+    }
+
+    //@Delete('chat/group/:chatId')
+    deleteGroup() {
+        // look up chat in DB
+        // deletes group chat
+    }
+
+    //@Get('chat/group/:chatId/info')
+    getGroupInfo(chatId: string) {
+        // look up chat in DB
+        // returns group info
+    }
+
+    //@Post('chat/group/:chatId/info')
+    setGroupInfo(chatId: string) {
+        // look up chat in DB
+        // sets group info
+    }
+
+    //@Post('chat/group/:chatId/:userId')
+    addGroupMember() {
+        // look up chat in DB
+        // look up user in DB
+        // adds user to group chat
+    }
+
+    //@Delete('chat/group/:chatId/:userId')
+    removeGroupMember() {
+        // look up chat in DB
+        // look up user in DB
+        // removes user from group chat
+    }
+
+    //@Post('chat/group/:chatId/:userId/promote')
+    promoteGroupAdmin() {
+        // look up chat in DB
+        // look up user in DB
+        // promotes user to admin
+    }
+    
+    //@Post('chat/group/:chatId/:userId/demote')
+    demoteGroupAdmin() {
+        // look up chat in DB
+        // look up user in DB
+        // demotes user from admin
+    }
+
+    //@Get('stories')
+    getStories() {
+        // look up user in DB
+        // returns related user's stories
+    }
+
+    //@Post('stories')
+    addStory(content) {
+        // look up user in DB
+        // adds a new story
+    }
+
+    //@Delete('stories/:storyId')
+    deleteStory() {
+        // look up story in DB
+        // deletes story
+    }
+
+    //@Post('user/config')
+    setUserConfig() {
+        // look up user in DB
+        // sets user config, including:
+        // - online status
+        // - last seen
+        // - message read receipts
+        // - backup settings
+        // - etc
+    }
+
+    //@Post('user/picture')
+    setUserPicture() {
+        // look up user in DB
+        // sets user profile picture
+    }
+
+    //@Post('backup/linkHosting')
+    linkHosting() {
+        // look up user in DB
+        // links user's account to a cloud storage service to store encrypted backups
+    }
+
+}
